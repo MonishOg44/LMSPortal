@@ -23,7 +23,9 @@ const resume = location.state?.resume;
   const [course, setCourse] = useState(null);
 
   useEffect(() => {
-  fetch(`${import.meta.env.VITE_API_URL}/api/Courses/${id}`)
+  fetch(`${import.meta.env.VITE_API_URL}/api/Courses/${id}`, {
+    headers: { 'ngrok-skip-browser-warning': 'true' }
+  })
     .then(res => res.json())
     .then(data => {
       console.log("Course from API:", data);

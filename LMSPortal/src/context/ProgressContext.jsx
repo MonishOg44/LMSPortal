@@ -147,7 +147,9 @@ export const ProgressProvider = ({ children }) => {
 const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/Courses`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/Courses`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' }
+    })
       .then(res => res.json())
       .then(data => {
         console.log("ProgressContext Courses:", data);
@@ -239,7 +241,9 @@ const [courses, setCourses] = useState([]);
 
     const loadProgress = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/Progress/${user.id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/Progress/${user.id}`, {
+          headers: { 'ngrok-skip-browser-warning': 'true' }
+        });
         const data = await res.json();
         
         const completed = {};
@@ -481,6 +485,7 @@ const [courses, setCourses] = useState([]);
       try {
         await fetch(`${import.meta.env.VITE_API_URL}/api/Auth/delete/${userIdToDelete}`, {
           method: 'DELETE',
+          headers: { 'ngrok-skip-browser-warning': 'true' }
         });
       } catch (err) {
         console.error("Failed to delete account on backend:", err);
@@ -601,7 +606,8 @@ const toggleLessonCompleted = async (courseId, lessonId) => {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify(progressData)
       }
@@ -609,7 +615,8 @@ const toggleLessonCompleted = async (courseId, lessonId) => {
 
 
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/Progress/${user.id}`
+      `${import.meta.env.VITE_API_URL}/api/Progress/${user.id}`,
+      { headers: { 'ngrok-skip-browser-warning': 'true' } }
     );
 
 
@@ -746,12 +753,15 @@ const toggleLessonCompleted = async (courseId, lessonId) => {
       await fetch(`${import.meta.env.VITE_API_URL}/api/Progress`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify(progressData)
       });
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/Progress/${user.id}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/Progress/${user.id}`, {
+        headers: { 'ngrok-skip-browser-warning': 'true' }
+      });
       const data = await response.json();
       
       const completed = {};
@@ -819,6 +829,7 @@ const toggleLessonCompleted = async (courseId, lessonId) => {
       try {
         await fetch(`${import.meta.env.VITE_API_URL}/api/Progress/reset/${user.id}`, {
           method: 'DELETE',
+          headers: { 'ngrok-skip-browser-warning': 'true' }
         });
       } catch (err) {
         console.error("Failed to reset progress on backend:", err);
@@ -845,6 +856,7 @@ const toggleLessonCompleted = async (courseId, lessonId) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true',
         },
         body: JSON.stringify({
           userId: user.id,

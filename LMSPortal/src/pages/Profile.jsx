@@ -82,13 +82,28 @@ export default function Profile() {
   // Rank panel state — now navigates to /rank
   const openRankPanel = () => navigate('/rank');
 
-  const handleDownloadCertificate = (cert) => {
-    const link = document.createElement('a');
-    link.href = `/certificates/${cert.courseId}.png`;
-    link.download = `${cert.courseTitle.replace(/[^a-z0-9]/gi, '_')}_Certificate.png`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleDownloadCertificate = async (cert) => {
+    try {
+      const url = `${import.meta.env.BASE_URL}certificates/${cert.courseId}.png`;
+      const res = await fetch(url);
+      const blob = await res.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = objectUrl;
+      link.download = `${cert.courseTitle.replace(/[^a-z0-9]/gi, '_')}_Certificate.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(objectUrl);
+    } catch {
+      // Fallback: direct navigation
+      const link = document.createElement('a');
+      link.href = `${import.meta.env.BASE_URL}certificates/${cert.courseId}.png`;
+      link.download = `${cert.courseTitle.replace(/[^a-z0-9]/gi, '_')}_Certificate.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
     triggerNotification(`SYS // DOWNLOADING_CERTIFICATE // FILE: "${cert.courseTitle.toUpperCase()}"`);
   };
 

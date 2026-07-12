@@ -111,7 +111,6 @@ body {
     radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.03) 0px, transparent 45%),
     radial-gradient(at 100% 0%, rgba(219, 39, 119, 0.03) 0px, transparent 40%),
     radial-gradient(at 50% 100%, rgba(192, 132, 252, 0.03) 0px, transparent 50%);
-  background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
@@ -202,7 +201,7 @@ h1 em, h2 em, h3 em, h4 em {
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 9999px;
   padding: 6px 6px 6px 12px;
-  min-width: 600px;
+  min-width: min(600px, 100%);
   max-width: 820px;
   width: 100%;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 1px 8px rgba(0, 0, 0, 0.02);
@@ -2255,6 +2254,7 @@ h1 em, h2 em, h3 em, h4 em {
   padding: 0.5rem 1rem;
   letter-spacing: 0.05em;
   width: 280px;
+  max-width: 100%;
   transition: var(--transition);
 }
 
@@ -2270,6 +2270,7 @@ h1 em, h2 em, h3 em, h4 em {
   outline: none;
   border-bottom-color: var(--primary);
   width: 320px;
+  max-width: 100%;
 }
 
 .v-login-btn {
@@ -8017,4 +8018,27 @@ h1 em, h2 em, h3 em, h4 em {
   .rl-stats { gap: 1rem; flex-wrap: wrap; }
   .rl-stat-val { font-size: 0.9rem; }
   .rl-prog-track { width: 160px; }
+}
+
+/* ── Custom Mobile Responsive Overrides ── */
+@media (max-width: 600px) {
+  .alert-popup,
+  .alert-popup.futuristic-hud-popup {
+    bottom: 1rem !important;
+    right: 1rem !important;
+    left: 1rem !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    width: auto !important;
+  }
+  
+  .fabric-settings-block {
+    padding: 1.25rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .fabric-settings-block {
+    padding: 1.5rem !important;
+  }
 }

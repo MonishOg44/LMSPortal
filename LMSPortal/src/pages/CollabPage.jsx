@@ -203,7 +203,7 @@ export default function CollabPage() {
             {/* QR code image — user must place their QR at /public/gpay-qr.png */}
             <div style={{ position: 'relative', zIndex: 4 }}>
               <img
-                src="/gpay-qr.png"
+                src={`${import.meta.env.BASE_URL}gpay-qr.png`}
                 alt="GPay QR Code – Scan to pay Monish"
                 style={{
                   display: 'block',

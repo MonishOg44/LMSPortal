@@ -13,7 +13,9 @@ export default function Catalog() {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-  fetch(`${import.meta.env.VITE_API_URL}/api/Courses`)
+  fetch(`${import.meta.env.VITE_API_URL}/api/Courses`, {
+    headers: { 'ngrok-skip-browser-warning': 'true' }
+  })
     .then(res => res.json())
     .then(data => {
       console.log("Courses:", data);

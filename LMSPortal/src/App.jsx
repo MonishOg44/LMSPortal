@@ -31,12 +31,9 @@ function ProtectedRoute({ children }) {
 function AppContent() {
   const location = useLocation();
   
-  // Scroll to top on route change or window resize to prevent stuck scroll positions / layout offsets
+  // Scroll to top on route change only
   useEffect(() => {
-    const handleScrollReset = () => window.scrollTo(0, 0);
-    window.addEventListener('resize', handleScrollReset);
-    handleScrollReset(); // Trigger on mount/route change
-    return () => window.removeEventListener('resize', handleScrollReset);
+    window.scrollTo(0, 0);
   }, [location.pathname]);
 
   const isStrangeGT = location.pathname === '/strangegt' || location.pathname === '/collab' || location.pathname === '/rank';

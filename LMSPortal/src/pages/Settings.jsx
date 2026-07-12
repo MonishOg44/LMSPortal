@@ -244,7 +244,7 @@ export default function Settings() {
             updateCredentials(editUsername, editPassword);
           }} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', width: '100%' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: '1.5rem', width: '100%' }}>
               <div className="input-group" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <label className="input-label" style={{ fontSize: '0.8rem', fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>Login Username</label>
                 <input

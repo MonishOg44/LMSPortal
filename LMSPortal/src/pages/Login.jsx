@@ -112,7 +112,8 @@ console.log("API URL:", import.meta.env.VITE_API_URL);
   {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      'ngrok-skip-browser-warning': 'true'
     },
     body: JSON.stringify({
       fullName: signUpName.trim(),
@@ -186,7 +187,8 @@ console.log("Response:", data);
     {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        'ngrok-skip-browser-warning': 'true'
       },
       body: JSON.stringify({
         username: username.trim(),
@@ -351,6 +353,35 @@ console.log("Response:", data);
           .boot-decal.bottom-left { bottom: 1rem; left: 1rem; }
           .boot-decal.bottom-right { bottom: 1rem; right: 1rem; }
         }
+        @media (max-width: 600px) {
+          .boot-overlay {
+            padding: 2rem 1.25rem;
+          }
+          .boot-header {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 1rem !important;
+          }
+          .boot-footer {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 0.5rem !important;
+          }
+          .boot-title {
+            font-size: 0.75rem !important;
+            letter-spacing: 0.15em !important;
+          }
+          .boot-subtitle {
+            font-size: 0.55rem !important;
+          }
+          .boot-progress-title {
+            font-size: 0.7rem !important;
+          }
+          .boot-terminal {
+            padding: 1rem !important;
+            font-size: 0.7rem !important;
+          }
+        }
       `}</style>
 
       {shouldRenderBoot && (
@@ -362,12 +393,12 @@ console.log("Response:", data);
           <div className="boot-decal bottom-right" />
 
           {/* Top Row Header */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '1.5rem', width: '100%' }}>
+          <div className="boot-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '1.5rem', width: '100%' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-              <span style={{ fontSize: '0.9rem', fontWeight: 800, letterSpacing: '0.25em', color: '#ffffff', textShadow: '0 0 10px rgba(255, 255, 255, 0.4)', fontFamily: "'Space Grotesk', sans-serif" }}>STRANGEGT // SYSTEM_INITIALIZATION</span>
-              <span style={{ fontSize: '0.65rem', color: 'rgba(255, 255, 255, 0.7)', letterSpacing: '0.1em', fontFamily: "'Space Grotesk', sans-serif" }}>BOOT_SEQUENCE // SECURE_PORT_5175</span>
+              <span className="boot-title" style={{ fontSize: '0.9rem', fontWeight: 800, letterSpacing: '0.25em', color: '#ffffff', textShadow: '0 0 10px rgba(255, 255, 255, 0.4)', fontFamily: "'Space Grotesk', sans-serif" }}>STRANGEGT // SYSTEM_INITIALIZATION</span>
+              <span className="boot-subtitle" style={{ fontSize: '0.65rem', color: 'rgba(255, 255, 255, 0.7)', letterSpacing: '0.1em', fontFamily: "'Space Grotesk', sans-serif" }}>BOOT_SEQUENCE // SECURE_PORT_5175</span>
             </div>
-            <div style={{ fontFamily: 'Courier New, monospace', fontSize: '0.7rem', color: '#ffffff', border: '1px solid rgba(255, 255, 255, 0.4)', padding: '0.25rem 0.75rem', borderRadius: '4px', background: 'rgba(255, 255, 255, 0.05)', letterSpacing: '0.05em' }}>
+            <div className="boot-status" style={{ fontFamily: 'Courier New, monospace', fontSize: '0.7rem', color: '#ffffff', border: '1px solid rgba(255, 255, 255, 0.4)', padding: '0.25rem 0.75rem', borderRadius: '4px', background: 'rgba(255, 255, 255, 0.05)', letterSpacing: '0.05em' }}>
               [ STATUS: SECURE_BOOT ]
             </div>
           </div>
@@ -376,8 +407,8 @@ console.log("Response:", data);
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '2.5rem', width: '100%', margin: '2rem 0' }}>
             {/* Horizontal progress indicator */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: '600px', width: '100%', alignSelf: 'center' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', fontWeight: 700, fontFamily: 'Courier New, monospace', color: '#ffffff' }}>
-                <span>DECRYPTING_SECTOR_MATRICES</span>
+              <div className="boot-progress-header" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', fontWeight: 700, fontFamily: 'Courier New, monospace', color: '#ffffff' }}>
+                <span className="boot-progress-title">DECRYPTING_SECTOR_MATRICES</span>
                 <span style={{ color: '#ffffff', textShadow: '0 0 8px rgba(255, 255, 255, 0.5)' }}>{bootProgress}%</span>
               </div>
               <div style={{ width: '100%', height: '4px', background: 'rgba(255,255,255,0.04)', borderRadius: '2px', overflow: 'hidden' }}>
@@ -386,7 +417,7 @@ console.log("Response:", data);
             </div>
 
             {/* Terminal output box */}
-            <div style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: '8px', padding: '1.5rem', maxHeight: '180px', overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: '0.45rem', fontFamily: 'Courier New, monospace', fontSize: '0.75rem', color: 'rgba(255,255,255,0.85)', maxWidth: '600px', width: '100%', alignSelf: 'center', boxSizing: 'border-box' }}>
+            <div className="boot-terminal" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: '8px', padding: '1.5rem', maxHeight: '180px', overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: '0.45rem', fontFamily: 'Courier New, monospace', fontSize: '0.75rem', color: 'rgba(255,255,255,0.85)', maxWidth: '600px', width: '100%', alignSelf: 'center', boxSizing: 'border-box' }}>
               {bootLogs.map((log, index) => (
                 <div key={index} style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   &gt; {log}
@@ -401,7 +432,7 @@ console.log("Response:", data);
           </div>
 
           {/* Bottom Row Footer */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '1.5rem', fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.75)', fontFamily: "'Space Grotesk', sans-serif", width: '100%' }}>
+          <div className="boot-footer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '1.5rem', fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.75)', fontFamily: "'Space Grotesk', sans-serif", width: '100%' }}>
             <span>TARGET: LOCALHOST_WORKSPACE</span>
             <span>[ HOST_HASH: STRANGEGT_8.0.16 ]</span>
             <span>SYS_VER: 2026.07.10</span>

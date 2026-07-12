@@ -18,7 +18,9 @@ useEffect(() => {
 
     if (!user?.username) return;
 
-    fetch(`${import.meta.env.VITE_API_URL}/api/Auth/profile/${user.username}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/Auth/profile/${user.username}`, {
+        headers: { 'ngrok-skip-browser-warning': 'true' }
+    })
         .then(res => {
             if (!res.ok) throw new Error("Profile request failed");
             return res.json();
@@ -28,7 +30,9 @@ useEffect(() => {
 }, []);
 
 useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/Courses`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/Courses`, {
+        headers: { 'ngrok-skip-browser-warning': 'true' }
+    })
         .then(res => res.json())
         .then(data => {
             console.log("Courses from API:", data);

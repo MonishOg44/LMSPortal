@@ -503,15 +503,15 @@ export default function Navbar() {
           --crd-card-bg: rgba(255, 255, 255, 0.03);
         }
 
-        /* Cinematic Radial Circle Wipe */
+        /* Fade in/out — replaces clip-path circle wipe which showed the page beneath */
         .crd-page--out {
-          clip-path: circle(0% at 50% 50%);
-          pointer-events:none !important;
-          transition: clip-path 1.2s cubic-bezier(0.85, 0, 0.15, 1);
+          opacity: 0;
+          pointer-events: none !important;
+          transition: opacity 0.35s ease;
         }
         .crd-page--in {
-          clip-path: circle(150% at 50% 50%);
-          transition: clip-path 1.2s cubic-bezier(0.85, 0, 0.15, 1);
+          opacity: 1;
+          transition: opacity 0.35s ease;
         }
 
         /* Hide scrollbars but preserve scrolling */
