@@ -4957,31 +4957,32 @@ h1 em, h2 em, h3 em, h4 em {
   .serif-dock {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 0.3rem;
-    max-width: 92vw;
-    overflow-x: auto;
-    scrollbar-width: none;
-    white-space: nowrap;
-    padding: 5px 8px 5px 5px;
-  }
-  .serif-dock::-webkit-scrollbar {
-    display: none;
+    justify-content: center;
+    gap: 0.2rem;
+    max-width: 98vw;
+    padding: 4px 6px 4px 4px;
   }
   .serif-dock-close {
-    width: 34px;
-    height: 34px;
+    width: 26px;
+    height: 26px;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .serif-dock-close svg {
+    width: 12px;
+    height: 12px;
   }
   .serif-dock-divider {
-    height: 16px;
-    margin: 0 0.15rem;
+    height: 12px;
+    margin: 0 0.1rem;
     flex-shrink: 0;
   }
   .serif-dock-btn {
-    height: 34px;
-    padding: 0 0.65rem;
-    font-size: 0.72rem;
+    height: 28px;
+    padding: 0 0.45rem;
+    font-size: 0.65rem;
     flex-shrink: 0;
   }
   .serif-lab-root {
@@ -8065,6 +8066,12 @@ h1 em, h2 em, h3 em, h4 em {
   
   .fabric-settings-block {
     padding: 1.25rem !important;
+  }
+
+  .settings-container h2 {
+    font-size: clamp(1.6rem, 8vw, 2.5rem) !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
   }
 }
 

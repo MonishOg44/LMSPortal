@@ -35,7 +35,6 @@ export default function Lab() {
   return (
     <div className="serif-lab-root page-container">
       {/* Futuristic Background Additions */}
-      <div className="serif-lab-bg-glow" style={{ left: '50%', top: '50%' }} />
       <div className="serif-lab-grid" />
 
       {/* Main Content Area */}
