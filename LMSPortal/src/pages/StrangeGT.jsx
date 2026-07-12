@@ -569,7 +569,7 @@ function HomeSection({ onCollabClick }) {
       minHeight: 'calc(100vh - 5.5rem)',
       background: '#eceae5',
       position: 'relative',
-      overflow: 'hidden',
+      overflow: 'visible',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
@@ -577,19 +577,20 @@ function HomeSection({ onCollabClick }) {
       boxSizing: 'border-box',
     }}>
 
-      {/* Giant watermark background text */}
-      <div style={{
-        position: 'absolute',
-        top: '50%', left: '50%',
-        transform: 'translate(-50%, -50%)',
-        fontFamily: "'Playfair Display', serif",
-        fontSize: 'clamp(12rem, 28vw, 24rem)',
-        fontWeight: 900, lineHeight: 1,
-        color: 'rgba(1,43,29,0.04)',
-        userSelect: 'none', pointerEvents: 'none',
-        letterSpacing: '-0.06em', whiteSpace: 'nowrap',
-        zIndex: 0,
-      }}>SGT</div>
+      {/* Background watermark wrapper to prevent overflow without clipping floating cards */}
+      <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+        <div style={{
+          position: 'absolute',
+          top: '50%', left: '50%',
+          transform: 'translate(-50%, -50%)',
+          fontFamily: "'Playfair Display', serif",
+          fontSize: 'clamp(12rem, 28vw, 24rem)',
+          fontWeight: 900, lineHeight: 1,
+          color: 'rgba(1,43,29,0.04)',
+          userSelect: 'none', pointerEvents: 'none',
+          letterSpacing: '-0.06em', whiteSpace: 'nowrap',
+        }}>SGT</div>
+      </div>
 
       {/* ── Row 1: cards only ── */}
       <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-start', zIndex: 1 }}>
