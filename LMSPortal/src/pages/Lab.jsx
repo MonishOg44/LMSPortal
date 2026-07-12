@@ -32,19 +32,10 @@ export default function Lab() {
   const { theme } = useProgress();
   const [activeTool, setActiveTool] = useState(null);
 
-  // Futuristic background: subtle glowing mouse follower
-  const glowRef = useRef(null);
-  const handleMouseMove = (e) => {
-    if (glowRef.current) {
-      glowRef.current.style.left = `${e.clientX}px`;
-      glowRef.current.style.top = `${e.clientY}px`;
-    }
-  };
-
   return (
-    <div className="serif-lab-root page-container" onMouseMove={handleMouseMove}>
+    <div className="serif-lab-root page-container">
       {/* Futuristic Background Additions */}
-      <div ref={glowRef} className="serif-lab-bg-glow" style={{ left: '-1000px', top: '-1000px' }} />
+      <div className="serif-lab-bg-glow" style={{ left: '50%', top: '50%' }} />
       <div className="serif-lab-grid" />
 
       {/* Main Content Area */}
