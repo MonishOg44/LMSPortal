@@ -455,8 +455,105 @@ export default function StrangeGT() {
             transform: translateY(-2px) !important;
           }
 
-          .sgt-service-tile { transition: filter 0.3s ease; }
+          .sgt-services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            min-height: 480px;
+            flex: 1;
+          }
+          .sgt-service-tile {
+            padding: 3rem;
+            transition: filter 0.3s ease;
+          }
           .sgt-service-tile:hover { filter: brightness(1.1); }
+
+          .sgt-home-cards {
+            position: relative;
+            width: 280px;
+            height: 200px;
+            flex-shrink: 0;
+          }
+          .sgt-home-card-back {
+            position: absolute;
+            width: 240px;
+            height: 155px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #f0714b 0%, #4ca2a8 55%, #2f3e46 100%);
+            box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+            animation: sgt-float-back 7s ease-in-out infinite;
+            right: 0;
+            top: 0;
+            z-index: 1;
+            overflow: hidden;
+          }
+          .sgt-home-card-front {
+            position: absolute;
+            width: 240px;
+            height: 155px;
+            border-radius: 22px;
+            background: linear-gradient(160deg, #c8d8cf 0%, #e0eae6 100%);
+            box-shadow: 0 28px 65px rgba(0,0,0,0.16);
+            animation: sgt-float-front 7s ease-in-out infinite;
+            right: 28px;
+            top: 36px;
+            z-index: 2;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 16px;
+            box-sizing: border-box;
+          }
+
+          @media (max-width: 768px) {
+            .sgt-header {
+              padding: 0.75rem 1rem !important;
+            }
+            .sgt-dash-text {
+              display: none !important;
+            }
+            .sgt-center-sub {
+              display: none !important;
+            }
+            .sgt-services-grid {
+              grid-template-columns: 1fr !important;
+              min-height: auto !important;
+            }
+            .sgt-service-tile {
+              padding: 1.75rem 1.5rem !important;
+            }
+            .sgt-service-tile h3 {
+              margin-bottom: 0.5rem !important;
+            }
+          }
+
+          @media (max-width: 480px) {
+            .sgt-home-cards {
+              width: 220px !important;
+              height: 160px !important;
+            }
+            .sgt-home-card-back {
+              width: 185px !important;
+              height: 120px !important;
+            }
+            .sgt-home-card-front {
+              width: 185px !important;
+              height: 120px !important;
+              right: 20px !important;
+              top: 28px !important;
+              padding: 10px !important;
+            }
+            .sgt-home-card-front div:nth-child(2) {
+              padding: 6px 10px !important;
+              border-radius: 8px !important;
+            }
+            .sgt-home-card-front div:nth-child(2) div:first-child {
+              font-size: 0.52rem !important;
+            }
+            .sgt-home-card-front div:nth-child(2) div:last-child {
+              font-size: 0.46rem !important;
+            }
+          }
         `}</style>
       </div>
     </>
@@ -498,27 +595,13 @@ function HomeSection({ onCollabClick }) {
       <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-start', zIndex: 1 }}>
 
         {/* Floating stacked cards — top right */}
-        <div style={{ position: 'relative', width: 280, height: 200, flexShrink: 0 }}>
+        <div className="sgt-home-cards">
           {/* Back card */}
-          <div style={{
-            position: 'absolute', width: 240, height: 155, borderRadius: 22,
-            background: 'linear-gradient(135deg, #f0714b 0%, #4ca2a8 55%, #2f3e46 100%)',
-            boxShadow: '0 24px 60px rgba(0,0,0,0.18)',
-            animation: 'sgt-float-back 7s ease-in-out infinite',
-            right: 0, top: 0, zIndex: 1, overflow: 'hidden',
-          }}>
+          <div className="sgt-home-card-back">
             <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 25% 25%, rgba(255,255,255,0.2) 0%, transparent 55%)' }} />
           </div>
           {/* Front card */}
-          <div style={{
-            position: 'absolute', width: 240, height: 155, borderRadius: 22,
-            background: 'linear-gradient(160deg, #c8d8cf 0%, #e0eae6 100%)',
-            boxShadow: '0 28px 65px rgba(0,0,0,0.16)',
-            animation: 'sgt-float-front 7s ease-in-out infinite',
-            right: 28, top: 36, zIndex: 2, overflow: 'hidden',
-            display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
-            padding: 16, boxSizing: 'border-box',
-          }}>
+          <div className="sgt-home-card-front">
             <div style={{ position: 'absolute', width: 70, height: 110, background: 'rgba(0,0,0,0.55)', borderRadius: '50%', filter: 'blur(18px)', right: 38, top: 10, transform: 'rotate(-8deg)' }} />
             <div style={{ background: 'rgba(255,255,255,0.28)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.35)', borderRadius: 12, padding: '9px 13px', zIndex: 3 }}>
               <div style={{ fontFamily: "'Space Grotesk', monospace", fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#012b1d' }}>strangegt studio</div>
@@ -532,7 +615,7 @@ function HomeSection({ onCollabClick }) {
       <div style={{ zIndex: 1, margin: '1.5rem 0 2rem' }}>
         <h1 style={{
           fontFamily: "'Playfair Display', serif",
-          fontSize: 'clamp(4.5rem, 12vw, 10rem)',
+          fontSize: 'clamp(2.4rem, 11vw, 10rem)',
           fontWeight: 900, lineHeight: 0.88,
           letterSpacing: '-0.04em', color: '#012b1d',
           textTransform: 'uppercase', margin: 0,
@@ -732,10 +815,10 @@ function ServicesSection() {
 
         </div>
       </div>
-      <div style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', minHeight: 480 }}>
+      <div className="sgt-services-grid">
         {items.map((item, i) => (
           <div key={item.label} className="sgt-service-tile"
-            style={{ background: item.bg, border: item.border, padding: '3rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer', position: 'relative', overflow: 'hidden', transition: 'filter 0.3s ease' }}
+            style={{ background: item.bg, border: item.border, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer', position: 'relative', overflow: 'hidden', transition: 'filter 0.3s ease' }}
             onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1.1)'; }}
             onMouseLeave={e => { e.currentTarget.style.filter = 'none'; }}
           >
@@ -853,11 +936,22 @@ function ContactSection() {
   const textMuted   = isDark ? 'rgba(255,255,255,0.4)' : 'rgba(1,43,29,0.38)';
   const borderCol   = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(1,43,29,0.08)';
 
-  // Card face styles
-  const cardW = 380, cardH = 230;
+  const [isMobile, setIsMobile] = React.useState(window.innerWidth < 480);
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 480);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const cardW = isMobile ? Math.min(320, window.innerWidth - 32) : 380;
+  const cardH = isMobile ? (cardW * 230) / 380 : 230;
+
+  const normalizedRotY = ((rotY % 360) + 360) % 360;
+  const showBack = normalizedRotY > 90 && normalizedRotY < 270;
+
   const faceBase = {
     position: 'absolute', width: '100%', height: '100%',
-    borderRadius: 26, backfaceVisibility: 'hidden',
+    borderRadius: isMobile ? 18 : 26, backfaceVisibility: 'hidden',
     WebkitBackfaceVisibility: 'hidden',
   };
 
@@ -922,7 +1016,15 @@ function ContactSection() {
             }}
           >
             {/* ── FRONT FACE ── */}
-            <div style={{ ...faceBase, background: 'linear-gradient(135deg, #4d050a 0%, #9e0e1b 60%, #ff4655 100%)', boxShadow: '0 40px 100px rgba(158,14,27,0.5), inset 0 1px 0 rgba(255,255,255,0.08)', overflow: 'hidden' }}>
+            <div style={{ 
+              ...faceBase, 
+              background: 'linear-gradient(135deg, #4d050a 0%, #9e0e1b 60%, #ff4655 100%)', 
+              boxShadow: '0 40px 100px rgba(158,14,27,0.5), inset 0 1px 0 rgba(255,255,255,0.08)', 
+              overflow: 'hidden',
+              visibility: showBack ? 'hidden' : 'visible',
+              opacity: showBack ? 0 : 1,
+              transition: 'opacity 0.15s ease'
+            }}>
               {/* Sheen overlay */}
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%)', pointerEvents: 'none' }} />
               {/* Noise grain */}
@@ -931,24 +1033,24 @@ function ContactSection() {
               <div style={{ position: 'absolute', width: 180, height: 180, borderRadius: '50%', background: 'radial-gradient(circle, rgba(242,207,67,0.18) 0%, transparent 70%)', top: -60, right: -30, pointerEvents: 'none' }} />
               
               {/* Vertical stripes on the right side */}
-              <div style={{ position: 'absolute', top: 0, right: 60, bottom: 0, width: 14, background: '#ffffff', opacity: 1, zIndex: 1 }} />
-              <div style={{ position: 'absolute', top: 0, right: 36, bottom: 0, width: 4, background: '#ffffff', opacity: 1, zIndex: 1 }} />
+              <div style={{ position: 'absolute', top: 0, right: isMobile ? 44 : 60, bottom: 0, width: isMobile ? 10 : 14, background: '#ffffff', opacity: 1, zIndex: 1 }} />
+              <div style={{ position: 'absolute', top: 0, right: isMobile ? 26 : 36, bottom: 0, width: isMobile ? 3 : 4, background: '#ffffff', opacity: 1, zIndex: 1 }} />
 
               {/* Logo chip */}
-              <div style={{ position: 'absolute', top: 22, left: 24, display: 'flex', alignItems: 'center', gap: 8, zIndex: 2 }}>
-                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#f2cf43', boxShadow: '0 0 10px rgba(242,207,67,0.7)', animation: 'sgt-pulse 2s infinite' }} />
-                <span style={{ fontFamily: "'Space Grotesk', monospace", fontSize: '0.6rem', fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#f2cf43' }}>strangegt</span>
+              <div style={{ position: 'absolute', top: isMobile ? 14 : 22, left: isMobile ? 16 : 24, display: 'flex', alignItems: 'center', gap: isMobile ? 5 : 8, zIndex: 2 }}>
+                <div style={{ width: isMobile ? 8 : 10, height: isMobile ? 8 : 10, borderRadius: '50%', background: '#f2cf43', boxShadow: '0 0 10px rgba(242,207,67,0.7)', animation: 'sgt-pulse 2s infinite' }} />
+                <span style={{ fontFamily: "'Space Grotesk', monospace", fontSize: isMobile ? '0.52rem' : '0.6rem', fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#f2cf43' }}>strangegt</span>
               </div>
               {/* Chip icon */}
-              <div style={{ position: 'absolute', bottom: 75, left: 24, zIndex: 2 }}>
-                <div style={{ width: 42, height: 32, borderRadius: 6, border: '1.5px solid rgba(242,207,67,0.35)', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: '1fr 1fr 1fr', gap: 3, padding: 4, boxSizing: 'border-box' }}>
+              <div style={{ position: 'absolute', bottom: isMobile ? 55 : 75, left: isMobile ? 16 : 24, zIndex: 2 }}>
+                <div style={{ width: isMobile ? 34 : 42, height: isMobile ? 26 : 32, borderRadius: 5, border: '1.5px solid rgba(242,207,67,0.35)', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: '1fr 1fr 1fr', gap: 2, padding: 3, boxSizing: 'border-box' }}>
                   {Array(9).fill(0).map((_,i) => <div key={i} style={{ borderRadius: 1, background: i % 2 === 0 ? 'rgba(242,207,67,0.3)' : 'rgba(242,207,67,0.1)' }} />)}
                 </div>
               </div>
               {/* Card number */}
-              <div style={{ position: 'absolute', bottom: 22, left: 24, zIndex: 2 }}>
-                <div style={{ fontFamily: "'Space Grotesk', monospace", fontSize: '1.05rem', fontWeight: 700, letterSpacing: '0.22em', color: 'rgba(255,255,255,0.85)' }}>9940252059</div>
-                <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.58rem', color: 'rgba(255,255,255,0.4)', marginTop: 4, letterSpacing: '0.1em', textTransform: 'uppercase' }}>strangegt technologies · creative studio</div>
+              <div style={{ position: 'absolute', bottom: isMobile ? 14 : 22, left: isMobile ? 16 : 24, zIndex: 2 }}>
+                <div style={{ fontFamily: "'Space Grotesk', monospace", fontSize: isMobile ? '0.85rem' : '1.05rem', fontWeight: 700, letterSpacing: '0.22em', color: 'rgba(255,255,255,0.85)' }}>9940252059</div>
+                <div style={{ fontFamily: "'Inter', sans-serif", fontSize: isMobile ? '0.48rem' : '0.58rem', color: 'rgba(255,255,255,0.4)', marginTop: 4, letterSpacing: '0.1em', textTransform: 'uppercase' }}>strangegt technologies · creative studio</div>
               </div>
               {/* Wave lines */}
               <svg style={{ position: 'absolute', bottom: 0, right: 0, opacity: 0.06, zIndex: 2 }} width="160" height="120" viewBox="0 0 160 120">
@@ -959,16 +1061,30 @@ function ContactSection() {
             </div>
 
             {/* ── BACK FACE ── */}
-            <div style={{ ...faceBase, background: isDark ? '#18161f' : '#f2cf43', transform: 'rotateY(180deg)', overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.25)', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '2rem 2.2rem', boxSizing: 'border-box', transition: 'background 0.4s ease' }}>
+            <div style={{ 
+              ...faceBase, 
+              background: isDark ? '#18161f' : '#f2cf43', 
+              transform: 'rotateY(180deg)', 
+              overflow: 'hidden', 
+              boxShadow: '0 40px 100px rgba(0,0,0,0.25)', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              justifyContent: 'center', 
+              padding: isMobile ? '1.2rem 1.4rem' : '2rem 2.2rem', 
+              boxSizing: 'border-box', 
+              transition: 'background 0.4s ease, opacity 0.15s ease',
+              visibility: showBack ? 'visible' : 'hidden',
+              opacity: showBack ? 1 : 0
+            }}>
               {/* Sheen */}
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(145deg, rgba(255,255,255,0.12) 0%, transparent 50%)', pointerEvents: 'none' }} />
-              <div style={{ fontFamily: "'Space Grotesk', monospace", fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(1,43,29,0.45)', marginBottom: '1rem' }}>Drop us a line</div>
-              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.55rem', fontWeight: 800, color: isDark ? '#ffffff' : '#012b1d', lineHeight: 1.2, marginBottom: '1.2rem', transition: 'color 0.4s ease' }}>
+              <div style={{ fontFamily: "'Space Grotesk', monospace", fontSize: isMobile ? '0.52rem' : '0.58rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(1,43,29,0.45)', marginBottom: isMobile ? '0.6rem' : '1rem' }}>Drop us a line</div>
+              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? '1.15rem' : '1.55rem', fontWeight: 800, color: isDark ? '#ffffff' : '#012b1d', lineHeight: 1.2, marginBottom: isMobile ? '0.8rem' : '1.2rem', transition: 'color 0.4s ease', wordBreak: 'break-all' }}>
                 monish2005n@gmail.com
               </div>
-              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: isMobile ? '0.5rem' : '0.75rem', flexWrap: 'wrap' }}>
                 {['Instagram', 'LinkedIn', 'YouTube'].map(s => (
-                  <span key={s} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '5px 12px', borderRadius: '9999px', border: `1px solid ${isDark ? 'rgba(255,255,255,0.2)' : 'rgba(1,43,29,0.2)'}`, color: isDark ? 'rgba(255,255,255,0.7)' : '#012b1d', cursor: 'pointer', transition: 'all 0.3s ease' }}>{s}</span>
+                  <span key={s} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: isMobile ? '0.58rem' : '0.65rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: isMobile ? '4px 8px' : '5px 12px', borderRadius: '9999px', border: `1px solid ${isDark ? 'rgba(255,255,255,0.2)' : 'rgba(1,43,29,0.2)'}`, color: isDark ? 'rgba(255,255,255,0.7)' : '#012b1d', cursor: 'pointer', transition: 'all 0.3s ease' }}>{s}</span>
                 ))}
               </div>
               <div style={{ position: 'absolute', bottom: 16, right: 22, fontFamily: "'Space Grotesk', monospace", fontSize: '0.52rem', color: isDark ? 'rgba(255,255,255,0.2)' : 'rgba(1,43,29,0.3)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>est. 2026</div>
