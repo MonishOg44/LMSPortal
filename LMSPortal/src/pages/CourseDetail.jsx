@@ -147,26 +147,26 @@ useEffect(() => {
   return (
     <div className="page-container">
       {/* Back Button */}
-      <Link to="/" className="btn btn-secondary" style={{ marginBottom: '1.5rem', display: 'inline-flex', alignSelf: 'flex-start' }}>
+      <Link to="/" className="btn btn-secondary course-detail-back-btn">
         <ArrowLeft size={16} />
         <span>Back to Dashboard</span>
       </Link>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
+      <div className="course-detail-header">
         <div>
-          <span style={{ color: '#a855f7', fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase' }}>
+          <span className="course-detail-meta">
             {course.category} • {course.level}
           </span>
-          <h1 style={{ fontSize: '2rem', fontWeight: 800, marginTop: '0.25rem', marginBottom: '0.25rem' }}>
+          <h1 className="course-detail-title">
             {course.title}
           </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-            Taught by <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{course.instructor}</span>
+          <p className="course-detail-instructor-text">
+            Taught by <span className="course-detail-instructor-name">{course.instructor}</span>
           </p>
         </div>
 
         {currentProgress === 100 && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '0.6rem 1.2rem', borderRadius: '12px', color: '#10b981', fontWeight: 700 }}>
+          <div className="course-completed-badge">
             <Award size={20} />
             <span>Course Completed!</span>
           </div>
@@ -193,27 +193,27 @@ useEffect(() => {
             />
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', background: 'var(--bg-secondary)', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
-            <div>
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Now Playing</span>
-              <h3 style={{ fontSize: '1.1rem', color: 'var(--text-primary)', fontWeight: 700 }}>{activeLesson.title}</h3>
+          <div className="now-playing-container">
+            <div className="now-playing-info">
+              <span className="now-playing-label">Now Playing</span>
+              <h3 className="now-playing-title">{activeLesson.title}</h3>
             </div>
-         <button
-    className={`btn ${isCompleted(activeLesson.id) ? 'btn-secondary' : 'btn-primary'}`}
-    style={
-        isCompleted(activeLesson.id)
-            ? { borderColor: '#10b981', color: '#10b981' }
-            : {}
-    }
-    onClick={() => {
-        console.log("Button clicked");
-        toggleLessonCompleted(course.id, activeLesson.id);
-    }}
->
-    {isCompleted(activeLesson.id)
-        ? "Completed ✓"
-        : "Mark as Complete"}
-</button>
+            <button
+              className={`btn ${isCompleted(activeLesson.id) ? 'btn-secondary' : 'btn-primary'}`}
+              style={
+                isCompleted(activeLesson.id)
+                  ? { borderColor: '#10b981', color: '#10b981' }
+                  : {}
+              }
+              onClick={() => {
+                console.log("Button clicked");
+                toggleLessonCompleted(course.id, activeLesson.id);
+              }}
+            >
+              {isCompleted(activeLesson.id)
+                ? "Completed ✓"
+                : "Mark as Complete"}
+            </button>
           </div>
 
           {/* Navigation Tabs */}
@@ -243,15 +243,15 @@ useEffect(() => {
             {activeTab === 'overview' && (
               <div>
                 <h3>About this Course</h3>
-                <p style={{ marginBottom: '1.5rem', lineHeight: '1.7' }}>{course.description}</p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', background: 'var(--bg-tertiary)', padding: '1rem', borderRadius: '8px' }}>
+                <p className="course-overview-desc">{course.description}</p>
+                <div className="course-overview-info-grid">
                   <div>
-                    <strong style={{ color: 'var(--text-secondary)', display: 'block', fontSize: '0.9rem' }}>Total Duration</strong>
-                    <span style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: 600 }}>{course.duration}</span>
+                    <strong className="course-overview-info-label">Total Duration</strong>
+                    <span className="course-overview-info-value">{course.duration}</span>
                   </div>
                   <div>
-                    <strong style={{ color: 'var(--text-secondary)', display: 'block', fontSize: '0.9rem' }}>Difficulty</strong>
-                    <span style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: 600 }}>{course.level}</span>
+                    <strong className="course-overview-info-label">Difficulty</strong>
+                    <span className="course-overview-info-value">{course.level}</span>
                   </div>
                 </div>
               </div>
@@ -329,12 +329,12 @@ useEffect(() => {
         <div className="sidebar-syllabus">
           <div className="syllabus-title-row">
             <h2>Course Outline</h2>
-            <span style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
+            <span className="course-outline-progress">
               {currentProgress}% complete
             </span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', overflowY: 'auto', maxHeight: '500px', paddingRight: '0.25rem' }}>
+          <div className="course-outline-list">
             {(course.modules || []).map((mod, modIdx) => (
               <div className="module-container" key={modIdx}>
                 <div className="module-header">{mod.title}</div>
