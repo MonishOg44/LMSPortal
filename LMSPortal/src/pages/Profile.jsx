@@ -43,11 +43,7 @@ export default function Profile() {
         triggerNotification("SYS_ERROR // FILE_SIZE_LIMIT_EXCEEDED (MAX 2MB)");
         return;
       }
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        updateProfile(null, reader.result);
-      };
-      reader.readAsDataURL(file);
+      updateProfile(null, null, file);
     }
   };
 
@@ -60,8 +56,11 @@ export default function Profile() {
           </div>
         );
       }
+      const avatarUrl = user.avatar.startsWith('/') 
+        ? `${import.meta.env.VITE_API_URL}${user.avatar}` 
+        : user.avatar;
       return (
-        <img src={user.avatar} className="profile-avatar-lg" style={{ objectFit: 'cover' }} alt="Profile" />
+        <img src={avatarUrl} className="profile-avatar-lg" style={{ objectFit: 'cover' }} alt="Profile" />
       );
     }
     return <div className="profile-avatar-lg">{initial}</div>;

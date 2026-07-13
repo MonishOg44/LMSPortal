@@ -246,6 +246,40 @@ const [courses, setCourses] = useState([]);
     localStorage.setItem('strange_theme', theme);
   }, [theme]);
 
+  // Sync profile details with backend database on load/identity validation
+  useEffect(() => {
+    if (!user?.username) return;
+
+    const fetchUserProfile = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/Auth/profile/${user.username}`, {
+          headers: { 'ngrok-skip-browser-warning': 'true' }
+        });
+        if (res.ok) {
+          const profileData = await res.json();
+          setUser(prev => {
+            if (!prev) return prev;
+            // Only update state if profile picture or name has changed to prevent infinite loops
+            if (prev.avatar !== profileData.profilePicture || prev.name !== profileData.fullName) {
+              const updated = {
+                ...prev,
+                name: profileData.fullName,
+                avatar: profileData.profilePicture
+              };
+              localStorage.setItem('strange_user', JSON.stringify(updated));
+              return updated;
+            }
+            return prev;
+          });
+        }
+      } catch (err) {
+        console.error("Error syncing user profile:", err);
+      }
+    };
+
+    fetchUserProfile();
+  }, [user?.username]);
+
   const parseDurationToMinutes = (durationStr) => {
     if (!durationStr) return 0;
     let total = 0;
@@ -394,7 +428,8 @@ const [courses, setCourses] = useState([]);
     const loggedInUser = {
         id: userData.userId,
         name: userData.fullName,
-        username: userData.username
+        username: userData.username,
+        avatar: userData.profilePicture
     };
 
     setUser(loggedInUser);
@@ -567,24 +602,73 @@ const [courses, setCourses] = useState([]);
     }, true);
   };
 
-  const updateProfile = (newName, newAvatar) => {
+  const updateProfile = async (newName, newAvatar, avatarFile) => {
+    let finalAvatar = newAvatar;
+
+    if (avatarFile) {
+      try {
+        const formData = new FormData();
+        formData.append('file', avatarFile);
+        formData.append('userId', user.id);
+
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/Auth/upload-profile-picture`, {
+          method: 'POST',
+          body: formData,
+          headers: { 'ngrok-skip-browser-warning': 'true' }
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          finalAvatar = data.profilePictureUrl;
+        } else {
+          const errMsg = await res.text();
+          triggerNotification(`SYS_ERROR // UPLOAD_FAILED // "${errMsg.toUpperCase()}"`);
+          return;
+        }
+      } catch (err) {
+        console.error("Error uploading profile picture:", err);
+        triggerNotification("SYS_ERROR // NETWORK_FAILURE_ON_UPLOAD");
+        return;
+      }
+    } else if (newAvatar !== undefined) {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/Auth/update-profile-picture-string`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true'
+          },
+          body: JSON.stringify({
+            userId: user.id,
+            profilePicture: newAvatar
+          })
+        });
+        if (!res.ok) {
+          triggerNotification("SYS_ERROR // UPDATE_AVATAR_FAILED");
+          return;
+        }
+      } catch (err) {
+        console.error("Error updating avatar string:", err);
+      }
+    }
+
     setUser(prev => {
       let updated = prev ? { ...prev } : {};
       if (newName !== undefined && newName !== null) {
         updated.name = newName.trim();
       }
-      if (newAvatar !== undefined) {
-        updated.avatar = newAvatar;
+      if (finalAvatar !== undefined) {
+        updated.avatar = finalAvatar;
       }
       localStorage.setItem('strange_user', JSON.stringify(updated));
       return updated;
     });
     
-    if (newName && newAvatar) {
+    if (newName && finalAvatar) {
       triggerNotification(`SYS_CONFIG // IDENTITY_VERIFIED // PROFILE_UPDATED`);
     } else if (newName) {
       triggerNotification(`SYS_CONFIG // PROFILE_ID_MUTATED: "${newName.trim().toUpperCase()}"`);
-    } else if (newAvatar !== undefined) {
+    } else if (finalAvatar !== undefined) {
       triggerNotification(`SYS_CONFIG // AVATAR_MUTATED // STATUS: OK`);
     }
   };
