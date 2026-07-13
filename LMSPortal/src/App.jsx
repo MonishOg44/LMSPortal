@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { HashRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { ProgressProvider, useProgress } from './context/ProgressContext';
 import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard';
@@ -236,9 +236,9 @@ function AppContent() {
 function App() {
   return (
     <ProgressProvider>
-      <HashRouter>
+      <BrowserRouter>
         <AppContent />
-      </HashRouter>
+      </BrowserRouter>
     </ProgressProvider>
   );
 }
