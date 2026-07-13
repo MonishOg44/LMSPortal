@@ -8,6 +8,66 @@ import {
   Camera, Upload, X, Trash2
 } from 'lucide-react';
 
+function SecureAvatar({ src, className, style, alt, fallback }) {
+  const [imageSrc, setImageSrc] = React.useState(null);
+
+  React.useEffect(() => {
+    if (!src) {
+      setImageSrc(null);
+      return;
+    }
+
+    if (src.startsWith('data:') || src.startsWith('linear-gradient') || src.startsWith('radial-gradient')) {
+      setImageSrc(src);
+      return;
+    }
+
+    let isMounted = true;
+    let objectUrl = null;
+
+    const fetchImage = async () => {
+      try {
+        const response = await fetch(src, {
+          headers: { 'ngrok-skip-browser-warning': 'true' }
+        });
+        if (!response.ok) throw new Error('Failed to load image');
+        const blob = await response.blob();
+        if (isMounted) {
+          objectUrl = URL.createObjectURL(blob);
+          setImageSrc(objectUrl);
+        }
+      } catch (err) {
+        console.error("Error loading secure image:", err);
+        if (isMounted) {
+          setImageSrc(src);
+        }
+      }
+    };
+
+    fetchImage();
+
+    return () => {
+      isMounted = false;
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
+  }, [src]);
+
+  if (!imageSrc) {
+    return fallback;
+  }
+
+  return (
+    <img 
+      src={imageSrc} 
+      className={className} 
+      style={style} 
+      alt={alt} 
+    />
+  );
+}
+
 export default function Profile() {
   const { 
     enrolledCourses, 
@@ -60,7 +120,13 @@ export default function Profile() {
         ? `${import.meta.env.VITE_API_URL}${user.avatar}` 
         : user.avatar;
       return (
-        <img src={avatarUrl} className="profile-avatar-lg" style={{ objectFit: 'cover' }} alt="Profile" />
+        <SecureAvatar 
+          src={avatarUrl} 
+          className="profile-avatar-lg" 
+          style={{ objectFit: 'cover' }} 
+          alt="Profile" 
+          fallback={<div className="profile-avatar-lg">{initial}</div>}
+        />
       );
     }
     return <div className="profile-avatar-lg">{initial}</div>;
