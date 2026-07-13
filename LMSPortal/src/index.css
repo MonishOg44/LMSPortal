@@ -8080,3 +8080,166 @@ h1 em, h2 em, h3 em, h4 em {
     padding: 1.5rem !important;
   }
 }
+
+/* ── Mobile Landscape and Short Viewport Overrides ── */
+@media (max-height: 520px) {
+  /* Lab Page Root Layout */
+  .serif-lab-root {
+    position: fixed !important;
+    inset: 0 !important;
+    overflow: hidden !important;
+    width: 100vw !important;
+    padding-top: 55px !important;
+    padding-bottom: 50px !important;
+    box-sizing: border-box !important;
+  }
+  
+  .serif-lab-center-wrapper {
+    align-items: center !important;
+    height: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .serif-hero-title {
+    font-size: clamp(1.4rem, 6vh, 2rem) !important;
+    line-height: 1.1 !important;
+  }
+
+  .serif-hero-subtitle {
+    font-size: 0.78rem !important;
+    margin-top: 0.2rem !important;
+    max-width: 450px !important;
+    line-height: 1.3 !important;
+  }
+
+  .serif-tool-modal {
+    max-height: calc(100vh - 105px) !important;
+  }
+
+  .serif-tool-body {
+    padding: 0.4rem !important;
+  }
+
+  .serif-tool-header {
+    padding: 0.4rem 0.75rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  /* Bottom Dock mini layout */
+  .serif-dock-wrapper {
+    bottom: 0.4rem !important;
+  }
+  .serif-dock {
+    gap: 0.15rem !important;
+    padding: 3px !important;
+  }
+  .serif-dock-close {
+    width: 26px !important;
+    height: 26px !important;
+  }
+  .serif-dock-close svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+  .serif-dock-divider {
+    height: 12px !important;
+    margin: 0 0.1rem !important;
+  }
+  .serif-dock-btn {
+    height: 26px !important;
+    padding: 0 0.4rem !important;
+    font-size: 0.6rem !important;
+  }
+
+  /* AI Chat Sandbox */
+  .lab-chat-messages {
+    min-height: 0 !important;
+    max-height: none !important;
+    flex: 1 !important;
+  }
+  .lab-chat-bubble {
+    padding: 0.4rem 0.65rem !important;
+    font-size: 0.78rem !important;
+  }
+  .lab-chat-input-row {
+    padding-top: 0.3rem !important;
+    margin-top: 0.2rem !important;
+  }
+  .lab-chat-input {
+    padding: 0.4rem 0.75rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Code Runner */
+  .lab-code-editor {
+    height: 80px !important;
+    font-size: 0.72rem !important;
+  }
+  .lab-code-actions {
+    margin: 0.25rem 0 !important;
+  }
+  .lab-code-output {
+    height: 55px !important;
+  }
+  .lab-output-body {
+    font-size: 0.72rem !important;
+    padding: 0.3rem !important;
+  }
+
+  /* System Monitor */
+  .lab-gauges {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 0.4rem !important;
+  }
+  .lab-gauge-card {
+    padding: 0.35rem !important;
+  }
+  .lab-waveform-container {
+    height: 30px !important;
+  }
+  .lab-sys-log {
+    display: none !important;
+  }
+
+  /* StrangeGT Fullscreen Menu Overlay */
+  div:has(> nav > .sgt-menu-item) {
+    justify-content: flex-start !important;
+    padding-top: 5.5rem !important;
+    padding-bottom: 3.5rem !important;
+    overflow-y: auto !important;
+  }
+  .sgt-menu-item {
+    padding: 0.5rem 0 !important;
+    gap: 1rem !important;
+  }
+  .sgt-menu-label {
+    font-size: clamp(1.8rem, 8vh, 3.2rem) !important;
+  }
+  .sgt-menu-item .sgt-menu-arrow {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  div:has(> nav > .sgt-menu-item) > nav + div {
+    position: absolute !important;
+    bottom: 1rem !important;
+  }
+
+  /* StrangeGT Page Elements */
+  .sgt-header {
+    padding: 0.4rem 1rem !important;
+  }
+  .sgt-center-pill {
+    transform: scale(0.82) !important;
+  }
+  .sgt-hamburger-btn {
+    transform: scale(0.82) !important;
+  }
+  .sgt-dash-btn {
+    transform: scale(0.82) !important;
+  }
+  main:has(.sgt-page) {
+    padding-top: 3.5rem !important;
+  }
+}

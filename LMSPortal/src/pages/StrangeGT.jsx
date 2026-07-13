@@ -1079,7 +1079,7 @@ function ContactSection() {
             }}>
               {/* Sheen */}
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(145deg, rgba(255,255,255,0.12) 0%, transparent 50%)', pointerEvents: 'none' }} />
-              <div style={{ fontFamily: "'Space Grotesk', monospace", fontSize: isMobile ? '0.52rem' : '0.58rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(1,43,29,0.45)', marginBottom: isMobile ? '0.6rem' : '1rem' }}>Drop us a line</div>
+              <div style={{ fontFamily: "'Space Grotesk', monospace", fontSize: isMobile ? '0.52rem' : '0.58rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(1,43,29,0.45)', marginBottom: isMobile ? '0.6rem' : '1rem' }}>Drop us a like</div>
               <div style={{ fontFamily: "'Playfair Display', serif", fontSize: isMobile ? '1.15rem' : '1.55rem', fontWeight: 800, color: isDark ? '#ffffff' : '#012b1d', lineHeight: 1.2, marginBottom: isMobile ? '0.8rem' : '1.2rem', transition: 'color 0.4s ease', wordBreak: 'break-all' }}>
                 monish2005n@gmail.com
               </div>
