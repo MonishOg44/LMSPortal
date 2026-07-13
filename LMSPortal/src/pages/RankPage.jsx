@@ -1373,19 +1373,31 @@ export default function RankPage() {
           .ring-outer { width: 250px; height: 250px; }
           .ring-mid { width: 210px; height: 210px; }
           .ring-inner { width: 170px; height: 170px; }
-          .rank-matcha-right {
-            order: 3;
-            align-items: center;
-            padding-left: 0;
-          }
-          .slogan-container {
-            align-items: center;
-            margin-bottom: 1.2rem;
-          }
-          .description-paragraph {
-            max-width: 100%;
-            margin-bottom: 1.5rem;
-          }
+        .rank-matcha-right {
+  order: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-left: 0;
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem;
+}
+         .slogan-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto 1.2rem;
+}
+         .description-paragraph {
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto 1.5rem;
+  text-align: center;
+}
           .progress-section {
             max-width: 100%;
           }
@@ -1403,10 +1415,13 @@ export default function RankPage() {
           .rank-matcha-title {
             font-size: 3.5rem !important;
             letter-spacing: -1.5px;
-          }
-          .slogan-word {
-            font-size: 2.2rem !important;
-          }
+      }
+   .slogan-word {
+    font-size: clamp(1.6rem, 7vw, 1.9rem) !important;
+    line-height: 0.9;
+    text-align: center;
+    letter-spacing: -0.5px;
+}
           .badge-card {
             width: 86px;
             height: 100px;
