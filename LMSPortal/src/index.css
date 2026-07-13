@@ -1016,7 +1016,7 @@ h1 em, h2 em, h3 em, h4 em {
 
 @media (max-width: 1024px) {
   .course-detail-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1147,21 +1147,38 @@ h1 em, h2 em, h3 em, h4 em {
   .main-content {
     padding: 5.5rem 1rem 1.5rem;
   }
+  
+  .page-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+  
   .course-detail-title {
     font-size: 1.5rem;
   }
-}
-
-@media (max-width: 600px) {
+  
   .course-detail-header {
     flex-direction: column;
     align-items: flex-start;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
   
   .now-playing-container {
     flex-direction: column;
     align-items: stretch;
     gap: 0.75rem;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  .now-playing-info {
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
   
   .now-playing-container button {
@@ -1174,6 +1191,8 @@ h1 em, h2 em, h3 em, h4 em {
     white-space: nowrap;
     padding-bottom: 4px;
     -webkit-overflow-scrolling: touch;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
   
   .tab-btn {
@@ -1184,6 +1203,21 @@ h1 em, h2 em, h3 em, h4 em {
 
   .course-overview-info-grid {
     grid-template-columns: 1fr;
+  }
+
+  .course-detail-container,
+  .video-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+  }
+
+  .sidebar-syllabus {
+    padding: 1rem !important;
+    position: static !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 }
 
@@ -4117,6 +4151,9 @@ h1 em, h2 em, h3 em, h4 em {
   position: relative;
   opacity: 0;
   animation: futuristicPageReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .page-container::before {
@@ -8250,6 +8287,63 @@ h1 em, h2 em, h3 em, h4 em {
 
 /* ── Mobile Landscape and Short Viewport Overrides ── */
 @media (max-height: 520px) {
+  /* Login/Register Page (v-portfolio) */
+  .v-portfolio-container {
+    overflow-y: auto !important;
+    align-items: flex-start !important;
+    padding: 1.5rem 1rem !important;
+  }
+  .v-center-content {
+    transform: none !important;
+    margin: 1rem auto !important;
+  }
+  .v-main-title {
+    font-size: clamp(1.8rem, 8vh, 3.2rem) !important;
+    margin-bottom: 1rem !important;
+  }
+  .v-login-form {
+    gap: 0.75rem !important;
+  }
+  .v-login-input {
+    font-size: 1.2rem !important;
+    padding: 0.35rem 0.5rem !important;
+    width: 260px !important;
+  }
+  .v-bottom-center-zone {
+    gap: 1rem !important;
+  }
+
+  /* Registration/Workspace Sign Up Modal */
+  .cyber-modal-overlay {
+    align-items: flex-start !important;
+    overflow-y: auto !important;
+    padding: 1rem !important;
+  }
+  .cyber-modal-content {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+    padding: 1.5rem 1.25rem !important;
+  }
+  .cyber-modal-content form {
+    gap: 0.75rem !important;
+  }
+  .cyber-modal-content form > div {
+    gap: 0.5rem !important;
+  }
+  .cyber-modal-content label {
+    font-size: 0.7rem !important;
+  }
+  .cyber-modal-content input {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.85rem !important;
+  }
+  .cyber-modal-content .cyber-modal-desc {
+    margin: 0.25rem 0 0.5rem 0 !important;
+  }
+  .cyber-modal-content .cyber-modal-title {
+    font-size: 1.1rem !important;
+  }
+
   /* Lab Page Root Layout */
   .serif-lab-root {
     position: fixed !important;
@@ -8339,20 +8433,54 @@ h1 em, h2 em, h3 em, h4 em {
     font-size: 0.8rem !important;
   }
 
-  /* Code Runner */
+  /* Code Runner Flexbox Optimization */
+  .lab-code-runner {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    gap: 0.4rem !important;
+  }
+  .lab-code-editor-wrapper {
+    flex: 1.2 !important;
+    min-height: 70px !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
   .lab-code-editor {
-    height: 80px !important;
+    flex: 1 !important;
+    height: 100% !important;
+    min-height: 50px !important;
     font-size: 0.72rem !important;
+    padding: 0.4rem 0.6rem !important;
   }
   .lab-code-actions {
-    margin: 0.25rem 0 !important;
+    flex-shrink: 0 !important;
+    margin: 0.15rem 0 !important;
+    gap: 0.5rem !important;
+  }
+  .lab-run-btn {
+    padding: 0.4rem 1rem !important;
+    font-size: 0.7rem !important;
+  }
+  .lab-clear-btn {
+    padding: 0.4rem 0.75rem !important;
+    font-size: 0.7rem !important;
+  }
+  .lab-run-count {
+    font-size: 0.7rem !important;
   }
   .lab-code-output {
-    height: 55px !important;
+    flex: 0.8 !important;
+    min-height: 50px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
   }
   .lab-output-body {
+    flex: 1 !important;
     font-size: 0.72rem !important;
-    padding: 0.3rem !important;
+    padding: 0.3rem 0.5rem !important;
+    overflow-y: auto !important;
   }
 
   /* System Monitor */
