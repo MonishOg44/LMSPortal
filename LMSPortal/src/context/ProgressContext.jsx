@@ -246,6 +246,26 @@ const [courses, setCourses] = useState([]);
     localStorage.setItem('strange_theme', theme);
   }, [theme]);
 
+  const parseDurationToMinutes = (durationStr) => {
+    if (!durationStr) return 0;
+    let total = 0;
+    const hoursMatch = durationStr.match(/(\d+)\s*h/);
+    const minsMatch = durationStr.match(/(\d+)\s*m/);
+    if (hoursMatch) {
+      total += parseInt(hoursMatch[1], 10) * 60;
+    }
+    if (minsMatch) {
+      total += parseInt(minsMatch[1], 10);
+    }
+    if (!hoursMatch && !minsMatch) {
+      const singleMatch = durationStr.match(/\d+/);
+      if (singleMatch) {
+        total += parseInt(singleMatch[0], 10);
+      }
+    }
+    return total;
+  };
+
   // Load progress and calculate user statistics from backend data
   useEffect(() => {
     if (!user || courses.length === 0) return;
@@ -297,10 +317,7 @@ const [courses, setCourses] = useState([]);
                 course.modules.forEach(mod => {
                   const lesson = mod.lessons.find(l => String(l.id) === rawLessonId);
                   if (lesson) {
-                    const match = (lesson.duration || "").match(/\d+/);
-                    if (match) {
-                      totalMinutes += parseInt(match[0], 10);
-                    }
+                    totalMinutes += parseDurationToMinutes(lesson.duration);
                   }
                 });
               }
@@ -689,10 +706,7 @@ const toggleLessonCompleted = async (courseId, lessonId) => {
             course.modules.forEach(mod => {
               const lesson = mod.lessons.find(l => String(l.id) === rawLessonId);
               if (lesson) {
-                const match = (lesson.duration || "").match(/\d+/);
-                if (match) {
-                  totalMinutes += parseInt(match[0], 10);
-                }
+                totalMinutes += parseDurationToMinutes(lesson.duration);
               }
             });
           }
@@ -829,10 +843,7 @@ const toggleLessonCompleted = async (courseId, lessonId) => {
               course.modules.forEach(mod => {
                 const lesson = mod.lessons.find(l => String(l.id) === rawLessonId);
                 if (lesson) {
-                  const match = (lesson.duration || "").match(/\d+/);
-                  if (match) {
-                    totalMinutes += parseInt(match[0], 10);
-                  }
+                  totalMinutes += parseDurationToMinutes(lesson.duration);
                 }
               });
             }
