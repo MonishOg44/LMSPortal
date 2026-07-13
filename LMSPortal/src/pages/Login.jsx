@@ -139,11 +139,11 @@ console.log("Response:", data);
       // Auto-login flow
       setIsFormExiting(true);
       setIsScanning(true);
-     setTimeout(() => {
-  startFuturisticTransition(data, () => {
-    navigate(from, { replace: true });
-  });
-}, 350);
+      setTimeout(() => {
+        startFuturisticTransition(data, signUpPass, () => {
+          navigate(from, { replace: true });
+        });
+      }, 350);
     } catch {
       setSignUpError('CONNECTION_FAILED // SERVER_OFFLINE');
     }
@@ -203,12 +203,9 @@ console.log("Status:", response.status);
 console.log("Response:", data);
 
       if (response.ok) {
-
-          localStorage.setItem("userId", data.userId);
-  localStorage.setItem("username", data.username);
-  localStorage.setItem("fullName", data.fullName);
-        // Sync context credentials so local features and pages function seamlessly
-        updateCredentials(username.trim(), password);
+        localStorage.setItem("userId", data.userId);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("fullName", data.fullName);
         localStorage.setItem("username", username.trim());
         
         setErrorMsg(null);
@@ -220,10 +217,10 @@ console.log("Response:", data);
         
         // Let the form exit animation start, then boot the global transition
         setTimeout(() => {
-  startFuturisticTransition(data, () => {
-    navigate(from, { replace: true });
-  });
-}, 350);
+          startFuturisticTransition(data, password, () => {
+            navigate(from, { replace: true });
+          });
+        }, 350);
       } else {
         setIsShaking(true);
         setErrorMsg(

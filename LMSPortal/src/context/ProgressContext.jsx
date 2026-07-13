@@ -165,8 +165,12 @@ const [courses, setCourses] = useState([]);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (parsed && parsed.name && parsed.name.toLowerCase() === 'onsih') {
-          parsed.name = 'monish';
+        if (parsed && parsed.name && parsed.name.toLowerCase() === '') {
+          parsed.name = '';
+          localStorage.setItem('strange_user', JSON.stringify(parsed));
+        }
+        if (parsed && !parsed.username) {
+          parsed.username = localStorage.getItem('username') || '';
           localStorage.setItem('strange_user', JSON.stringify(parsed));
         }
         return parsed;
@@ -199,7 +203,14 @@ const [courses, setCourses] = useState([]);
   });
 
   const [savedUsername, setSavedUsername] = useState(() => {
-    return localStorage.getItem('strange_username') || 'monish';
+    const savedUser = localStorage.getItem('strange_user');
+    if (savedUser) {
+      try {
+        const parsed = JSON.parse(savedUser);
+        if (parsed && parsed.username) return parsed.username;
+      } catch (e) {}
+    }
+    return localStorage.getItem('username') || localStorage.getItem('strange_username') || 'monish';
   });
 
   const [savedPassword, setSavedPassword] = useState(() => {
@@ -361,8 +372,7 @@ const [courses, setCourses] = useState([]);
     setActiveNotification(message);
   };
 
-  // Auth Operations
- const login = (userData) => {
+  const login = (userData, password) => {
 
     const loggedInUser = {
         id: userData.userId,
@@ -377,10 +387,20 @@ const [courses, setCourses] = useState([]);
         JSON.stringify(loggedInUser)
     );
 
+    if (userData.username) {
+      setSavedUsername(userData.username);
+      localStorage.setItem('strange_username', userData.username);
+    }
+
+    if (password) {
+      setSavedPassword(password);
+      localStorage.setItem('strange_password', password);
+    }
+
     triggerNotification(
       `ACCESS_GRANTED // IDENTITY_VERIFIED: ${loggedInUser.name.toUpperCase()}`
     );
-};
+  };
   const startLogoutTransition = (onComplete, isDelete = false) => {
     setIsDeleteTransition(isDelete);
     setIsLoggingOut(true);
@@ -474,6 +494,10 @@ const [courses, setCourses] = useState([]);
   const logout = () => {
     startLogoutTransition(() => {
       setUser(null);
+      setSavedUsername('monish');
+      setSavedPassword('monish25');
+      localStorage.removeItem('strange_username');
+      localStorage.removeItem('strange_password');
       triggerNotification(`SECURE_PORT_CLOSED // SESSION_DE_AUTHORIZED`);
     });
   };
@@ -482,6 +506,8 @@ const [courses, setCourses] = useState([]);
     if (!user?.id) return;
     const userIdToDelete = user.id;
     startLogoutTransition(async () => {
+      setSavedUsername('monish');
+      setSavedPassword('monish25');
       try {
         await fetch(`${import.meta.env.VITE_API_URL}/api/Auth/delete/${userIdToDelete}`, {
           method: 'DELETE',
@@ -882,7 +908,7 @@ const toggleLessonCompleted = async (courseId, lessonId) => {
     }
   };
 
-  const startFuturisticTransition = (userData, onComplete) => {
+  const startFuturisticTransition = (userData, password, onComplete) => {
     setIsGlobalTransitioning(true);
     setGlobalTransitionProgress(0);
     setGlobalTransitionPhase('booting');
@@ -938,7 +964,7 @@ const toggleLessonCompleted = async (courseId, lessonId) => {
         clearInterval(interval);
         
         // Log in to swap the route in the background
-        login(userData);
+        login(userData, password);
         
         setGlobalTransitionPhase('warping');
         setGlobalTransitionLogs(prev => [...prev, 'SYS // WARP TUNNEL OPENED. INITIALIZING REDIRECT...']);
