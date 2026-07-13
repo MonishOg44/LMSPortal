@@ -236,7 +236,7 @@ function AppContent() {
 function App() {
   return (
     <ProgressProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <AppContent />
       </BrowserRouter>
     </ProgressProvider>
