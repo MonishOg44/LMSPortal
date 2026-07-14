@@ -134,20 +134,12 @@ const resumeProgress = courseToResume
               <span className="fabric-link-arrow">&rarr;</span>
             </div>
 
-            <a 
-           href={courseToResume ? `/course/${courseToResume.id}` : "#"}
+            <div 
               className="fabric-hero-link-item"
-              style={{ textDecoration: 'none' }}
-              onClick={(e) => {
-                e.preventDefault();
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
                 if (!courseToResume) return;
-
-window.history.pushState(
-  null,
-  '',
-  `/course/${courseToResume.id}`
-);
-                window.dispatchEvent(new PopStateEvent('popstate'));
+                navigate(`/course/${courseToResume.id}`, { state: { resume: true } });
               }}
             >
               <div className="fabric-link-content">
@@ -167,7 +159,7 @@ window.history.pushState(
                 </span>
               </div>
               <span className="fabric-link-arrow">&rarr;</span>
-            </a>
+            </div>
           </div>
         </div>
 
